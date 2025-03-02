@@ -22,20 +22,20 @@ class Actions(Enum):
     RIGHT = 90
     DOWN = 180
     LEFT = 270
-
+    NONE = -1
     def prev(self):
         cls = self.__class__
         members = list(cls)
         index = members.index(self) - 1
         if index < 0:
-            index = len(members)-1
+            index = len(members)-2
         return members[index]
 
     def next(self):
         cls = self.__class__
         members = list(cls)
         index = members.index(self) + 1
-        if index >= len(members):
+        if index >= len(members) - 1:
             index = 0
         return members[index]
    
@@ -51,11 +51,12 @@ class States(Enum):
     WHITE = 1, -0.05
     GREEN = 2, 1
     BROWN = 3, -1
+    SUPERGREEN = 4, 3
 
     def __new__(cls, value, reward):
         member = object.__new__(cls)
         member._value_ = value
-        member.reward = reward
+        member.reward = float(reward)
         return member
 
     def _int__(self):
